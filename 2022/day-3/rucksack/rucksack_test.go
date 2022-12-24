@@ -1,6 +1,8 @@
 package rucksack
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPriority(t *testing.T) {
 	type args struct {
@@ -45,6 +47,52 @@ func TestPriority(t *testing.T) {
 			}
 			if got != tt.want {
 				t.Errorf("Priority() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBadge(t *testing.T) {
+	type args struct {
+		rucksacks []string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int
+		wantErr bool
+	}{{
+		name: "valid rucksacks 1",
+		args: args{
+			rucksacks: []string{
+				"vJrwpWtwJgWrhcsFMMfFFhFp",
+				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+				"PmmdzqPrVvPwwTWBwg",
+			},
+		},
+		want:    18,
+		wantErr: false,
+	}, {
+		name: "valid rucksacks 1",
+		args: args{
+			rucksacks: []string{
+				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+				"ttgJtRGJQctTZtZT",
+				"CrZsJsPPZsGzwwsLwLmpwMDw",
+			},
+		},
+		want:    52,
+		wantErr: false,
+	}}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Badge(tt.args.rucksacks)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Badge() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Badge() = %v, want %v", got, tt.want)
 			}
 		})
 	}

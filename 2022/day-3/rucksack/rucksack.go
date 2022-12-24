@@ -75,3 +75,39 @@ func Priority(rucksack string) (int, error) {
 
 	return priority, nil
 }
+
+// Badge returns the priority of the item (charecter) that appears in all elements of rucksacks.
+func Badge(rucksacks []string) (int, error) {
+
+	itemCounts := map[string]int{}
+	for _, rucksack := range rucksacks {
+		seen := map[string]bool{}
+		for _, itemRune := range rucksack {
+			item := string(itemRune)
+			if _, ok := seen[item]; ok {
+				continue
+			}
+			itemCounts[string(item)] += 1
+			seen[item] = true
+		}
+	}
+
+	numRucksacks := len(rucksacks)
+	badge := ""
+	for item, count := range itemCounts {
+		if count == numRucksacks {
+			badge = item
+		}
+	}
+
+	if badge == "" {
+		return 0, fmt.Errorf("rucksacks missing common badge %q: %w", rucksacks, ErrInvalidArguments)
+	}
+
+	priority, ok := itemToPriority[badge]
+	if !ok {
+		return 0, fmt.Errorf("rucksack containes unrecognized item %q: %w", rucksacks, ErrInvalidArguments)
+	}
+
+	return priority, nil
+}

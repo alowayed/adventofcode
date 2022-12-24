@@ -20,15 +20,38 @@ func run() error {
 	}
 	defer file.Close()
 
-	linesCh := make(chan string)
-	priorityCh, errCh := mr.Map(rucksack.Priority, linesCh)
+	// PART 1
+
+	// linesCh := make(chan string)
+	// priorityCh, errCh := mr.Map(rucksack.Priority, linesCh)
+
+	// s := bufio.NewScanner(file)
+	// for s.Scan() {
+	// 	line := s.Text()
+	// 	linesCh <- line
+	// }
+	// close(linesCh)
+
+	// PART 2
+
+	rucksacksCh := make(chan []string)
+	priorityCh, errCh := mr.Map(rucksack.Badge, rucksacksCh)
 
 	s := bufio.NewScanner(file)
+	rucksacks := []string{}
+	numRucksacks := 0
 	for s.Scan() {
 		line := s.Text()
-		linesCh <- line
+		rucksacks = append(rucksacks, line)
+		numRucksacks += 1
+
+		if numRucksacks == 3 {
+			rucksacksCh <- rucksacks
+			rucksacks = []string{}
+			numRucksacks = 0
+		}
 	}
-	close(linesCh)
+	close(rucksacksCh)
 
 	totalPriority := 0
 	for priority := range priorityCh {
