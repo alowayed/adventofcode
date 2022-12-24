@@ -72,7 +72,7 @@ func shapeBonus(r round) (int, error) {
 
 	bonus, ok := shapeToBonus[r]
 	if !ok {
-		fmt.Errorf("round %v: %w", r, ErrUnrecognizedShape)
+		return bonus, fmt.Errorf("round %v: %w", r, ErrUnrecognizedShape)
 	}
 
 	return bonus, nil
@@ -88,7 +88,7 @@ func roundBonus(r round) (int, error) {
 
 	bonus, ok := roundToBonus[r.play2]
 	if !ok {
-		fmt.Errorf("play %v: %w", r.play2, ErrUnrecognizedBonus)
+		return bonus, fmt.Errorf("play %v: %w", r.play2, ErrUnrecognizedBonus)
 	}
 
 	return bonus, nil
