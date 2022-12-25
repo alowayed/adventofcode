@@ -7,8 +7,8 @@ import (
 	"os"
 	"time"
 
-	mr "github.com/alowayed/adventofcode/2022/day-3/mapreduce"
 	"github.com/alowayed/adventofcode/2022/day-3/rucksack"
+	mr "github.com/alowayed/adventofcode/mapreduce"
 )
 
 func run() error {
