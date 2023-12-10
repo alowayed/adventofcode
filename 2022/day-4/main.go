@@ -49,6 +49,8 @@ func run() error {
 	// 	return subIntervalA || subIntervalB, nil
 	// }
 
+	// PART 1 END
+
 	// PART 2
 
 	containedFn := func(s string) (bool, error) {
@@ -72,6 +74,8 @@ func run() error {
 
 		return overlaps, nil
 	}
+
+	// PART 2 END
 
 	linesCh := make(chan string)
 	containedCh, errCh := mr.Map(containedFn, linesCh)

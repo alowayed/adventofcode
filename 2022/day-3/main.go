@@ -72,7 +72,6 @@ func run() error {
 }
 
 func main() {
-
 	start := time.Now()
 	log.Println("--- Starting")
 
